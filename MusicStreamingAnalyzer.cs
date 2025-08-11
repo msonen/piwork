@@ -155,19 +155,11 @@ namespace MusicStreamingAnalyzer
 
             // Log individual client statistics for debugging
             Console.WriteLine("\nClient Statistics:");
-            if (clientDistinctSongCounts.Any())
-            {
-                foreach (var client in clientDistinctSongCounts.OrderBy(c => c.ClientId))
-                {
-                    Console.WriteLine($"Client {client.ClientId}: {client.DistinctSongCount} distinct songs");
-                }
-            }
-            else
+            if (!clientDistinctSongCounts.Any())
             {
                 Console.WriteLine($"No clients found with play records on {targetDate:dd/MM/yyyy}");
             }
 
-            // Group clients by their distinct song count to get the final distribution
             var distribution = clientDistinctSongCounts
                 .GroupBy(client => client.DistinctSongCount)
                 .Select(group => new DistributionResult
